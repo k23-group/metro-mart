@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->text('title');
             $table->decimal('price');
-            $table->text('description');
-            $table->text('image');
+            $table->text('description')->nullable();
+            $table->text('image')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->timestamps();

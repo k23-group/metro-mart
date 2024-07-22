@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->text('name');
+            $table->text('description')->nullable();
+            $table->text('image')->nullable();
             $table->unsignedBigInteger('brand_id');
             $table->foreign('brand_id')->references('id')->on('brands')->cascadeOnDelete();
             $table->timestamps();

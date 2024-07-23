@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BrandStoreRequest;
 use App\Models\Brand;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -29,9 +31,12 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrandStoreRequest $request) : RedirectResponse
     {
-        //
+        Brand::create($request->validated());
+
+        return redirect()->route('brands.index')
+        ->with('success', 'Brand created successfully');
     }
 
     /**
@@ -39,7 +44,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        //
+        return view('brands.show', compact('brand'));
     }
 
     /**
@@ -47,7 +52,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view('brands.edit', compact('brand'));
     }
 
     /**
@@ -55,7 +60,9 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $brand->update($request->validated());
+
+        return redirect()->route('brands.index')->with('success', 'Brand updated successfully');
     }
 
     /**
@@ -63,6 +70,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        return redirect()->route('brands.index')->with('success', 'Brand deleted successfully');
     }
 }
